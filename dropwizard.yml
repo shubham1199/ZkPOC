@@ -1,0 +1,37 @@
+server:
+  applicationConnectors:
+  - type: http
+    port: 9198  #Change applicationPort value when this is changed
+  adminConnectors:
+  - type: http
+    port: 9199
+
+# This has to be reused from server.applicationConnector.port. server.applicationConnector.port is not visible from
+# Config. YML anchoring is also not working. To be fixed later.
+applicationPort: 9198
+
+database:
+  driverClass: com.mysql.jdbc.Driver
+  user: shubham1199
+  password: gozefo18
+  url: jdbc:mysql://test-zefo-db.gozefo.com:3306/prestashop_work
+  initialSize: 2
+  minSize: 2
+  maxSize: 5
+  properties:
+    hibernate.generate_statistics: false
+    hibernate.cache.use_second_level_cache: false
+
+logging:
+  level: INFO
+  appenders:
+    - type: file
+      currentLogFilename: /var/log/dropwizard.log
+      threshold: ALL
+      archive: false
+      archivedLogFilenamePattern: /var/log/dropwizard.log
+      archivedFileCount: 5
+      timeZone: IST
+      logFormat: "%-5level %date{ISO8601, IST} [%logger{0}] [%X{transactionId}] [%X{sessionId}]: %message%n"
+  loggers:
+    org.hibernate.orm.deprecation: ERROR
